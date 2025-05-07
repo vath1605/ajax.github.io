@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+</head>
+<style>
+    nav a.active{
+        background-color: rgb(243, 243, 219);
+        padding: 8px 14px;
+        border-radius: 10px;
+        transition: all 350ms ease-in-out;
+    }
+</style>
+<body>
+    <header>
+        <nav class="container bg-primary-subtle text-center py-3 rounded my-2 w-50"> 
+            <a class="active text-decoration-none text-dark-emphasis fw-semibold fs-5 mx-2" data-page="home" href="home.html">Home</a>
+            <a class="text-decoration-none text-dark-emphasis fw-semibold fs-5 mx-2" data-page="about" href="about.html">About Us</a>
+            <a class="text-decoration-none text-dark-emphasis fw-semibold fs-5 mx-2" data-page="service" href="service.html">Services</a>
+            <a class="text-decoration-none text-dark-emphasis fw-semibold fs-5 mx-2" data-page="contact" href="contact.html">Contact Us</a>
+        </nav>
+    </header>
+    <main id="contents" style="height: 900px; place-items: center;" class="container d-grid">
+
+    </main>
+</body>
+<script src="../jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+<script>
+    $(function(){
+        $.ajax({
+            url: "home.html",
+            type: "GET",
+            success: function(data){
+                $('#contents').html(data);
+            },
+            error: function(){
+                $('contents').html("<p>No data found... </p>");
+            }
+        });
+        $('#contents').html('<span>Loading...</span>');
+        $('nav a').click(function(e){
+            e.preventDefault();
+            let page = $(this).data('page');
+            $('nav a').removeClass('active');
+            $(this).addClass('active');
+            $.ajax({
+                url: page +".html",
+                type: "GET",
+                success: function(data){
+                    $('#contents').html(data);
+                },
+                error: function(){
+                    $('contents').html("<p>No data found... </p>");
+            }
+            })
+        });
+    })
+</script>
+</html>
